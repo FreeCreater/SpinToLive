@@ -1,12 +1,24 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    [System.Serializable]
+    public class Sound
+    {
+        public string name;
+        
+        public AudioClip clip;
+        [Range(0f, 1f)]
+        public float volume;
+        [Range(.1f, 3f)]
+        public float pitch;
+    
+        public bool loop;
+        internal AudioSource Source;
+    }
     [SerializeField] private Sound[] sounds;
-
+    
     public static AudioManager Instance;
     void Awake()
     {
@@ -33,6 +45,13 @@ public class AudioManager : MonoBehaviour
         Play("MainTheme");
     }
 
+    public enum Custom
+    {
+        Lol, 
+        Kek,
+        Cheburek
+    }
+    
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
