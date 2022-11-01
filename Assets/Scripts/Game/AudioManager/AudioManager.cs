@@ -1,25 +1,14 @@
 using System;
 using UnityEngine;
 
+namespace AudioManager
+{
 public class AudioManager : MonoBehaviour
 {
-    [System.Serializable]
-    public class Sound
-    {
-        public string name;
-        
-        public AudioClip clip;
-        [Range(0f, 1f)]
-        public float volume;
-        [Range(.1f, 3f)]
-        public float pitch;
-    
-        public bool loop;
-        internal AudioSource Source;
-    }
     [SerializeField] private Sound[] sounds;
-    
+
     public static AudioManager Instance;
+
     void Awake()
     {
         if (!Instance)
@@ -29,6 +18,7 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         DontDestroyOnLoad(gameObject);
         foreach (var s in sounds)
         {
@@ -45,13 +35,6 @@ public class AudioManager : MonoBehaviour
         Play("MainTheme");
     }
 
-    public enum Custom
-    {
-        Lol, 
-        Kek,
-        Cheburek
-    }
-    
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -62,4 +45,21 @@ public class AudioManager : MonoBehaviour
         }
         s.Source.Play();
     }
+
+    public void SetActiveMainTheme(bool active)
+    {
+        AudioSource audio = Array.Find(FindObjectsOfType<AudioSource>(), sound => sound.clip.name == "MainTheme");
+        audio.volume = active ? 1 : 0;
+    }
+    
+    public void SetActiveSoundEffects(bool active)
+    {
+        
+        foreach (var audio in FindObjectsOfType<AudioSource>())
+        {
+            if (audio.clip.name == "MainTheme") return;
+            audio.volume = active ? 1 : 0;
+        }
+    }
+}
 }

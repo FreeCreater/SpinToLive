@@ -17,14 +17,15 @@ public class GameOverHandeler : MonoBehaviour
     public void GameOver(int score)
     {
         FindObjectOfType<AnswerSpawner>().StopSpawn();
-        scoreText.SetText($"Nice try :)\nYou scored {score} points");
+        scoreText.SetText("Nice try :)\n" +
+                          $"You scored {score} points");
         gameOverPanel.SetActive(true);
         _player.SetActive(false);
     }
 
     public void ClickExit()
     {
-        Application.Quit();
+        SceneManager.LoadScene("Menu");
     }
 
     public void ClickRetry()

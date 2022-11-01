@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ResultShower : MonoBehaviour
 {
+    
     [SerializeField] private TextMeshProUGUI resultTextPref;
     private Points _p;
     
@@ -30,19 +31,17 @@ public class ResultShower : MonoBehaviour
             case Result.Great:
                 SpawnResult("Great", Color.green);
                 _p.score++;
-                AudioManager.Instance.Play("Great");
+                AudioManager.AudioManager.Instance.Play("Great");
                 break;
             case Result.Wrong:
                 SpawnResult("Wrong", Color.red);
                 _p.RevomeHp();
-                AudioManager.Instance.Play("Wrong");
+                AudioManager.AudioManager.Instance.Play("Wrong");
                 break;
             case Result.Missed:
                 SpawnResult("Missed", new Color(255, 80, 0));
-                AudioManager.Instance.Play("Missed");
+                AudioManager.AudioManager.Instance.Play("Missed");
                 _p.RevomeHp();
-                break;
-            default:
                 break;
         }
     }
